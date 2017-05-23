@@ -1,0 +1,9 @@
+D:\Practise\ConsoleApplication3\LINQSamples\bin\Debug\LINQSamples.exe.config
+D:\Practise\ConsoleApplication3\LINQSamples\bin\Debug\LINQSamples.exe
+D:\Practise\ConsoleApplication3\LINQSamples\bin\Debug\LINQSamples.pdb
+D:\Practise\ConsoleApplication3\LINQSamples\obj\Debug\LINQSamples.csprojResolveAssemblyReference.cache
+D:\Practise\ConsoleApplication3\LINQSamples\obj\Debug\LINQSamples.exe
+D:\Practise\ConsoleApplication3\LINQSamples\obj\Debug\LINQSamples.pdb
+D:\Practise\LINQSamples\bin\Debug\LINQSamples.exe.config
+D:\Practise\LINQSamples\obj\Debug\LINQSamples.exe
+D:\Practise\LINQSamples\obj\Debug\LINQSamples.pdb
