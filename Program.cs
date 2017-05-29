@@ -631,6 +631,124 @@ namespace LINQSamples
             //*******************************************************************
             #endregion
 
+            #region 调用扩展方法  GetSeniority
+            //获取所有员工的姓名及在本公司的工龄
+            //foreach (var employee in employees)
+            //{
+            //    Console.WriteLine("EmployeeName: " + employee.EmployeeName + " Seniority: " + employee.GetSeniority());
+            //}
+
+            //******************************Output*******************************
+            //EmployeeName: Mike Seniority: 1
+            //EmployeeName: Jack Seniority: 10
+            //EmployeeName: Adolph Seniority: 0
+            //EmployeeName: Antony Seniority: 6
+            //EmployeeName: Asa Seniority: 2
+            //EmployeeName: Bernie Seniority: 9
+            //EmployeeName: Carl Seniority: 2
+            //EmployeeName: Duncan Seniority: 7
+            //EmployeeName: Aimee Seniority: 0
+            //EmployeeName: Cassie Seniority: 3
+            //*******************************************************************
+
+            #endregion
+
+            #region 调用与方法相同签名的扩展方法
+            //Employee dave = new Employee("011", "Dave", 30, new DateTime(2017, 5, 25), Sex.Male, Department.PD, 200000, new string[] { "climbing" });
+            //dave.SayHello();
+            //******************************Output*******************************
+            //Hello , I'm Dave
+            //*******************************************************************
+            #endregion
+
+            #region 使用扩展方法扩展接口
+            //IHobby hobby = new Reading();
+            //hobby.ShareFeelings();
+            //******************************Output*******************************
+            //I'm happy.
+            //*******************************************************************
+            #endregion
+
+            #region 延迟加载
+
+            //var nameStartWithA = from e in employees
+            //                     where e.EmployeeName.StartsWith("A")
+            //                     select e;
+            //Console.WriteLine("First iteration : ");
+            //foreach (var item in nameStartWithA)
+            //{
+            //    Console.WriteLine(item.EmployeeName);
+            //}
+
+            //Console.WriteLine();
+
+            //employees.Add(new Employee("011", "Lily", 25, new DateTime(2017, 5, 29), Sex.Female, Department.HR, 100000, new string[] { "shopping" }));
+            //employees.Add(new Employee("012", "Leo", 28, new DateTime(2017, 5, 29), Sex.Male, Department.IT, 200000, new string[] { "reading" }));
+            //employees.Add(new Employee("013", "Amelia", 29, new DateTime(2017, 5, 29), Sex.Female, Department.PD, 200000, new string[] { "reading", "run" }));
+            //employees.Add(new Employee("014", "Ava", 32, new DateTime(2017, 5, 29), Sex.Female, Department.PD, 400000, new string[] { "swimming" }));
+
+            //Console.WriteLine("Second iteration : ");
+            //foreach (var item in nameStartWithA)
+            //{
+            //    Console.WriteLine(item.EmployeeName);
+            //}
+
+            //******************************Output*******************************
+            //First iteration :
+            //Adolph
+            //Antony
+            //Asa
+            //Aimee
+
+            //Second iteration :
+            //Adolph
+            //Antony
+            //Asa
+            //Aimee
+            //Amelia
+            //Ava
+            //*******************************************************************
+
+            #endregion
+
+            #region 立即执行
+            //var nameStartWithA = (from e in employees
+            //                     where e.EmployeeName.StartsWith("A")
+            //                     select e).ToList();
+            //Console.WriteLine("First iteration : ");
+            //foreach (var item in nameStartWithA)
+            //{
+            //    Console.WriteLine(item.EmployeeName);
+            //}
+
+            //Console.WriteLine();
+
+            //employees.Add(new Employee("011", "Lily", 25, new DateTime(2017, 5, 29), Sex.Female, Department.HR, 100000, new string[] { "shopping" }));
+            //employees.Add(new Employee("012", "Leo", 28, new DateTime(2017, 5, 29), Sex.Male, Department.IT, 200000, new string[] { "reading" }));
+            //employees.Add(new Employee("013", "Amelia", 29, new DateTime(2017, 5, 29), Sex.Female, Department.PD, 200000, new string[] { "reading", "run" }));
+            //employees.Add(new Employee("014", "Ava", 32, new DateTime(2017, 5, 29), Sex.Female, Department.PD, 400000, new string[] { "swimming" }));
+
+            //Console.WriteLine("Second iteration : ");
+            //foreach (var item in nameStartWithA)
+            //{
+            //    Console.WriteLine(item.EmployeeName);
+            //}
+
+            //******************************Output*******************************
+            //First iteration :
+            //Adolph
+            //Antony
+            //Asa
+            //Aimee
+
+            //Second iteration :
+            //Adolph
+            //Antony
+            //Asa
+            //Aimee
+            //*******************************************************************
+            #endregion
+
             Console.ReadLine();
         }
 
@@ -671,6 +789,11 @@ namespace LINQSamples
             this.Department = department.ToString();
             this.Salary = salary;
             this.Hobby = hobby;
+        }
+
+        public void SayHello()
+        {
+            Console.WriteLine("Hello , I'm " + EmployeeName);
         }
     }
 
@@ -727,4 +850,64 @@ namespace LINQSamples
         }
     }
 
+    /// <summary>
+    /// 扩展方法
+    /// </summary>
+    public static class EmployeeExtension
+    {
+        /// <summary>
+        /// 计算员工在本公司的工龄
+        /// </summary>
+        /// <param name="employee"></param>
+        /// <returns></returns>
+        public static long GetSeniority(this Employee employee)
+        {
+            TimeSpan ts = DateTime.Now - employee.EntryDate;
+
+            return (long)ts.TotalDays / 365;
+        }
+
+        public static void SayHello(this Employee employee)
+        {
+            Console.WriteLine("Hello , I'm " + employee.EmployeeName + " ,this is Extension Method");
+        }
+
+        public static void ShareFeelings(this IHobby hobby)
+        {
+            Console.WriteLine("I'm happy.");
+        }
+    }
+
+
+    public class Reading : IHobby
+    {
+        public void Play()
+        {
+            Console.WriteLine("I'm Reading.");
+        }
+    }
+
+    public class Swimming : IHobby
+    {
+        public void Play()
+        {
+            Console.WriteLine("I'm Swimming.");
+        }
+    }
+
+    public class Shopping : IHobby
+    {
+        public void Play()
+        {
+            Console.WriteLine("I'm Shopping.");
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public interface IHobby
+    {
+        void Play();
+    }
 }
